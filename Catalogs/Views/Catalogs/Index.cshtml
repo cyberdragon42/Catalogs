@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Catalogs.Models.Catalog>
+
+@{
+    ViewBag.Title = "ShowRootDirectories";
+}
+
+<h1>Root Dirctories</h1>
+<div>
+    @foreach (var item in Model)
+    {
+        <p>@Html.ActionLink(item.Name, "DirectoryInfo", new { id = item.Id })</p>
+    }
+</div>

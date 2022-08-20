@@ -16,7 +16,7 @@ namespace Catalogs
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Catalogs", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
