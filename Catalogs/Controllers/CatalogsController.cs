@@ -7,39 +7,54 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Catalogs.Models;
+using Catalogs.Services;
 
 namespace Catalogs.Controllers
 {
     public class CatalogsController : Controller
     {
         private CatalogsContext db = new CatalogsContext();
+        private CatalogsService service = new CatalogsService();
 
         public ActionResult Index()
         {
-            var catalogs = db.Catalogs.Where(c => c.ParentId == null);
+            var catalogs = db.Catalogs
+                .Where(c => c.ParentId == null);
             return View(catalogs.ToList());
         }
 
-        // GET: Catalogs/Create
-        public ActionResult Create()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ImportCatalogs(string path)
         {
-            var folder0 = db.Catalogs.Where(c=>c.Name=="Graphic Products").FirstOrDefault();
-
-            var folders1 = new List<Catalog>
+            if (string.IsNullOrEmpty(path))
             {
-                new Catalog{Name="Process", Parent=folder0},
-                new Catalog{Name="Final Product", Parent=folder0},
-            };
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Incorrect directory path");
+            }
 
-            db.Catalogs.AddRange(folders1);
-            db.SaveChanges();
-            ViewBag.ParentId = new SelectList(db.Catalogs, "Id", "Name");
+            try
+            {
+                service.RetrieveCatalogs(path, db);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, e.Message);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ImportCatalogs()
+        {
             return View();
         }
 
-        public ActionResult DirectoryInfo(int? id)
+        public ActionResult CatalogInfo(int? id)
         {
-            var folder = db.Catalogs.Where(c => c.Id == id).Include(c => c.Children).FirstOrDefault();
+            var folder = db.Catalogs
+                .Where(c => c.Id == id)
+                .Include(c => c.Children)
+                .FirstOrDefault();
             return View(folder);
         }
 

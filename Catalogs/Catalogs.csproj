@@ -138,6 +138,7 @@
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\CatalogsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CatalogsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -172,9 +173,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Catalogs\Details.cshtml" />
     <Content Include="Views\Catalogs\Index.cshtml" />
-    <Content Include="Views\Catalogs\DirectoryInfo.cshtml" />
+    <Content Include="Views\Catalogs\CatalogInfo.cshtml" />
+    <Content Include="Views\Catalogs\ImportCatalogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

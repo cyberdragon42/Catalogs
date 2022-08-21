@@ -1,0 +1,18 @@
+﻿@model Catalogs.Models.Catalog
+
+@{
+    ViewBag.Title = "DirectoryInfo";
+}
+
+<h2>"Folder" - @Model.Name</h2>
+
+@foreach (var item in Model.Children)
+{
+    <h4>@Html.ActionLink(item.Name, "CatalogInfo", new { id = item.Id })</h4>
+}
+
+<hr />
+<div>
+    @Html.ActionLink("Back to Root Catalogs", "Index")
+</div>
+
